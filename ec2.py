@@ -1,5 +1,4 @@
-AWS_ACCESS_KEY_ID = "AKIAWUJJPWO23RALYWX2"
-AWS_SECRET_ACCESS_KEY = "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"
+
 REGION = "us-east-2"
 from boto.ec2 import connect_to_region
 
