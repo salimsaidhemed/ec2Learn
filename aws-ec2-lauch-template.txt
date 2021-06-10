@@ -1,0 +1,50 @@
+# Describe all of your own images in the US East region
+aws ec2 describe-images --owners self --region us-east-1
+
+# Find Amazon-owned images for Windows Server 2012, 64-bit version
+aws ec2 describe-images --owners amazon --filters Name=architecture,Values=
+x86_64 | grep Server-2012
+
+# List the AMIs that have a specific set of key/value tags
+aws ec2 describe-images --owners self --filters Name=tag:role,Values=webserver
+Name=tag:environment,Values=production
+
+#Run an Instance
+aws ec2 run-instances --image-id ami-051d99278ba9fdc66 --region us-east-1 --key Salim --instance-type t2.micro --output text
+
+aws ec2 run-instances --image-id ami-051d99278ba9fdc66 --count 1 --instance-type t2.micro --key-name Salim --region | jq
+
+
+#Describe a Running Instance
+aws ec2 describe-instance-status 
+
+#to terminate an instance
+aws ec2 terminate-instances --instance-ids <ID> --region <REGION>
+
+#Connecting to your EC2 Instance
+ssh -i /path/my-key-pair.pem my-instance-user-name@my-instance-public-dns-name
+
+Get the default user name for the AMI that you used to launch your instance:
+
+For Amazon Linux 2 or the Amazon Linux AMI, the user name is ec2-user.
+
+For a CentOS AMI, the user name is centos.
+
+For a Debian AMI, the user name is admin.
+
+For a Fedora AMI, the user name is ec2-user or fedora.
+
+For a RHEL AMI, the user name is ec2-user or root.
+
+For a SUSE AMI, the user name is ec2-user or root.
+
+For an Ubuntu AMI, the user name is ubuntu.
+
+Otherwise, if ec2-user and root don't work, check with the AMI provider.
+
+#Modify Security Groups To Allow ssh
+Go to the EC2 Management Console
+Click on Security Groups (in the left sidebar).
+Select your EC2 instance's security group.
+In the bottom box, click on the Inbound tab.
+There should be an SSH rule, make sure that it can be accessed from anywhere and that it is on the correct port (22 for SSH). Also, make sure that the protocol is TCP.
